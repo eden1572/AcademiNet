@@ -17,6 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+#הוספתי פה 
+from django.urls import path, re_path #זה אומר תביא לי את URL שמאפשר לעשות אותו דבר כמו PATH
+from django.urls import path
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    #path(r'^admin',include(admin.urls)) #לא לשכוח לטפל בנתיב
 ]
