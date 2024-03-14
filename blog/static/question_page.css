@@ -1,0 +1,32 @@
+body{
+    background-color: #ecf0f1;
+    text-align: center;
+    font-family: monospace;
+}
+
+.main{
+    color: #e46c44;
+    font-size: x-large;
+}
+
+a{
+    color: #583442;
+    font-size: medium;
+}
+
+form{
+    font-size: large;
+}
+
+h1{
+    color: #583442;
+    font-size: 300%;
+}
+
+textarea{
+    background-color: whitesmoke;
+    border-color: #23c9cd;
+    border-style: hidden;
+    border-width: 0.5cap;
+    box-shadow: -10px -10px 20px #23cacd18;
+}

@@ -12,8 +12,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 
+import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+#TEMPLATES_DIR = os.path.join(BASE_DIR,"templates")
 
 
 # Quick-start development settings - unsuitable for production
@@ -39,7 +42,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< Updated upstream
     'accounts'
+=======
+    'blog', #making the blog database.
+    'crispy_forms',#for the blog form
+    'authentication',#authentications.
+    
+>>>>>>> Stashed changes
 ]
 
 MIDDLEWARE = [
@@ -57,6 +67,8 @@ ROOT_URLCONF = 'AcadmiNET.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        #  Add  'TEMPLATE_DIRS' here
+        
         'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -111,7 +123,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'israel'
 
 USE_I18N = True
 
@@ -122,6 +134,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+MEDIA_URL =  '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+#DATA_UPLOAD_MAX_MEMORY_SIZE = 52,428,800
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
