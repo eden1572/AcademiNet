@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .container {
+            max-width: 800px;
+            margin: auto;
+            text-align: center;
+        }
+        .charts-container {
+            display: flex;
+            justify-content: center; /* ממרכז את הגרפים באופן אופקי */
+            flex-wrap: wrap;
+        }
+        .chart {
+            margin: 10px;
+            flex-basis: calc(50% - 20px); /* נותן לכל גרף אורך בסיס של מחצית מהמסך לפחות, מוריד 20px בגלל המרווחים */
+            max-width: 400px;
+        }
+        #platformChart, #activityChart {
+            height: auto; /* מבטיח שיחס הגודל נשמר ללא תלות ברוחב */
+            max-height: 250px; /* מגביל את גובה הגרף ל-250px */
+        }
+        ul.no-bullets {
+            list-style-type: none; /* מסיר את הנקודות */
+            padding: 0;
+            margin: 0;
+        }
+        canvas {
+            width: 100%; /* הקנבס יתפשט לכל הרוחב האפשרי */
+            height: auto; /* הגובה יהיה אוטומטי ותלוי ברוחב */
+        }
+        h1.dashboard-title {
+            font-size: 3em;
+            color: #333;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+            margin-bottom: 0.5em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="dashboard-title">Dashboard</h1>
+        <div>
+            <h2>Currently Connected Users:</h2>
+            <p id="connected_users">{{ connected_users }}</p>
+            <ul class="no-bullets">
+                {% for user in users_list %}
+                    <li>{{ user.username }} - Last login: {{ user.last_login }}</li>
+                {% empty %}
+                    <li>No users are currently connected.</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <h2>Recent Logins in the Last Week:</h2>
+            <p id="recent_logins">{{ recent_logins }}</p>
+        </div>
+        <div class="charts-container">
+            <div class="chart">
+                <h2>Pie Chart: Distribution of Users</h2>
+                <canvas id="platformChart"></canvas>
+            </div>
+            <div class="chart">
+                <h2>Bar Chart: User Activity by Hour</h2>
+                <canvas id="activityChart"></canvas>
+            </div>
+        <div>
+              <h2>amount blogs in the site:</h2>
+              <p id="amount_posts">{{ amount_posts }}</p>
+              <br>
+        </div>
+        <div>
+            <div>
+                <h2>amount StudyGroups in the site:</h2>
+                <p id="amount_Studygroups">{{ amount_Studygroups }}</p>
+                <br>
+            </div>
+            <div>
+                <h2>amount fixed in the site:</h2>
+                <p id="amount_fixed_problems">{{ amount_fixed_problems }}</p>
+                <br>
+            </div>
+            <div>
+                <h2>amount open issues in the site:</h2>
+                <p id="amount_problem">{{ amount_problem }}</p>
+                <br>
+            </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // גרף פאי
+            const platformData = {
+                labels: ['Connected Users', 'Recent Logins'],
+                datasets: [{
+                    label: 'User Distribution',
+                    data: [parseInt(document.getElementById('connected_users').textContent), parseInt(document.getElementById('recent_logins').textContent)],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(255, 99, 132, 0.5)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            };
+            new Chart(document.getElementById('platformChart'), {
+                type: 'pie',
+                data: platformData,
+            });
+
+            // גרף מוטות
+            const activityData = {
+                labels: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'],
+                datasets: [{
+                    label: 'Number of Users',
+                    data: [/* הכנס נתונים כאן */],
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            };
+            new Chart(document.getElementById('activityChart'), {
+                type: 'bar',
+                data: activityData,
+            });
+        });
+    </script>
+</body>
+</html>
