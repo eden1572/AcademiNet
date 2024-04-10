@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%load static%}
+    <link rel="stylesheet" href="{% static 'StudyGroups.css' %}"><!--css file.-->
+    <title>AcadmiNet</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="main">
+        <h3 class="logo">AcadmiNet</h3>
+        <div class="navbar"> <!--בר משימות ראשי-->
+            <ul>
+                <li><a href="">Home</a></li>
+                <li><a href="">Rights and Benefits</a></li>
+                <li><a href="Forum.html" class="back-to-forum">Forum</a></li>
+                <li><a href="">About us</a></li>
+                <li><a href="ContactUs.html">Contact us</a></li>
+            </ul>
+        </div>
+    </div>
+    <br> <br>
+    <div class="subforum-title">
+        <h3>Study Groups</h3>
+    </div> 
+    <form action="">
+        <div class="search-box">
+            <input type="text" name="search" id="" placeholder="search..">
+            <select name="divison" id="divison">
+                <option value="" disabled selected>divison</option>
+                <option value="program">Software Engineering</option> 
+                <option value="Machines">Mechanical Engineering</option>
+                <option value="electrical">Electrical Engineering</option>
+                <option value="architatual">Architecture</option>
+                <option value="structural">Structural Engineering</option>
+                <option value="industrial">Industrial Engineering</option>
+                <option value="comp-science">Computer science</option>
+                <option value="Chemical">Chemical Engineering</option>
+            </select>
+            <button class="search-button"><i class='bx bx-search bx-border'></i></button>
+        </div>
+    </form> <br>
+    <div class="info">
+        <div class="info-title"><h4>General info:</h4></div>
+        <div class="subforum-info">
+            <p>Welcome to the Study group page!<br>In here you can find, join and open study groups about diffrents subjects.</p>
+        </div>
+        <br>
+    </div>
+    <br> <br>
+    <div class="upload-question"><a href="{% url 'create_group'  %}">Create Group<i class='bx bx-plus' style="font-size: small;"></i></a></div>
+        {% csrf_token %} 
+        {% for group in groups %}
+    <div class="posts">      
+        <b><a> {{ group.title }}</a> by: <a >{{group.author}}</a></b>
+        <small><a> {{ group.data_created }}</a></small><br>
+        <em><a >divison:{{ group.division }}</a><br>
+        <p>{{ group.description }}</p>
+        <strong>Current Number of student:
+            {%if group.groupmembers_set.count == 0 %} 
+                <a>--/{{group.group_size}}</a></strong><br>
+            {%else%}
+                <a>{{group.groupmembers_set.count}} / {{group.group_size}}</a>
+            {%endif%}
+            <br>
+        {% if user not in group.groupmembers_set.all%}<!--checking if the user is in thy group-->
+            {%if user != group.author%}
+            <a href="{% url 'join_group' group_id=group.id %}">Join Group</a></p><!--הצטרפות לקבוצה-->
+            {%endif%}
+        {%endif%}
+        {%if user == group.author%}
+            <a href="{% url 'delete_group' group_id=group.id %}">Delete Group</a></p>
+        {%endif%}
+    </div>
+        {% endfor %}    
+
+    
+    <footer>
+        <p class="rights">all rights goes to AcadmiNet&copy;</p>
+        <a href="Forum.html" class="Back">Back</a>
+    </footer>
+</body>
+</html>

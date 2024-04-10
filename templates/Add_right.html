@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%load static%}
+    <link rel="stylesheet" href="{% static 'Add_right.css' %}">
+    <title>AcadmiNet</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="main">
+        <h3 class="logo">AcadmiNet</h3>
+        <div class="navbar"> <!--בר משימות ראשי-->
+            <ul>
+                <li><a href="">Home</a></li>
+                <li><a href="">Rights and Benefits</a></li>
+                <li><a href="Forum.html" class="back-to-forum">Forum</a></li>
+                <li><a href="">About us</a></li>
+                <li><a href="ContactUs.html">Contact us</a></li>
+            </ul>
+        </div>
+    </div> <br> <br>
+    <div class="question">
+        <h1>Uplode Rights</h1>
+        
+        <form method="post" action="{% url 'Add_right' %}" > <!--קישור לבסיס נתונים-->
+            {% csrf_token %}
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" placeholder="...."> <!--כותרת השאלה-->
+            <br><br>
+            <label for="topic">Choose Topic: </label> <!--בחירת נושא-->
+            <select name="topic" id="topic">
+                <option value="" disabled selected>---</option>
+                <option value="General">General</option>
+                <option value="Exams">Exams and Tests</option>
+                <option value="Reserve">Reserve soldiers</option>
+            </select>
+            <br><br>
+            <label for="description" class="Description">Description:</label><br>
+            <textarea name="content" id="content" cols="45" rows="15" placeholder="Start typing..."></textarea>
+            <br><br>
+            <label for="file"><i class='bx bx-upload'></i></label> <!--העלאת קובץ-->
+            <input type="header_image" name="header_image" id="header_image" accept=".pdf, .doc, .docx, .txt">
+            <br><br>
+            <input type="submit" value="Send">
+        </form>
+    </div> <br>
+    <footer>
+        <p class="rights">all rights goes to AcadmiNet&copy;</p>
+        <a href="" class="Back">Back</a><!--חוזר לעמוד ראשי של זכויות והטבות-->
+    </footer>
+</body>
+</html>
+

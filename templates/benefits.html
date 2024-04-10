@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {%load static%}
+    <link rel="stylesheet" href= "{% static 'benefitsrights.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Student benefits</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#events">events</a></li>
+            <li><a href="#workshops">workshops</a></li>
+            <li><a href="#lectures">Lectures</a></li>
+        </ul>
+    </nav>
+    <section id = "add_benefit">
+    {% if request.user.editor %}
+            <h2>Add Appeals-Editor.</h2>
+            <form method="get" action="{% url 'Add_benefits' %}">
+                {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Add right</button>
+                {%endif%}
+            </form>
+    </section>
+   
+   
+    
+        <section id="events">
+            <h2>Events</h2>
+            {% for post in post_list %}
+                {% if post.benefits_choices.strip == "Events" %}
+                    <h3>Event Name: {{ post.title }}</h3>
+                    <p>Description {{ post.content }}</p>
+                    <a href="{% if post.slug %}{% url 'post_detail' post.slug %}{% endif %}" class="btn btn-primary">Read More</a>
+                    <br><br>
+                    {% if request.user.editor %}<!-- Checking if the User made thy post, so it can edit it -->  
+                        <a href="{% url 'request_removal' post_id=post.id %}">Request removal of the post</a><br><br>    
+                        <a href="{% url 'update_post' post.slug %}">Edit</a>
+                    {% endif %}
+                    {% if request.user.is_superuser %}
+                        <form action="{% url 'remove_post' post_id=post.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit">Remove</button>
+                        </form>
+                    {% endif %}
+                {% endif %}          
+        {%endfor%}
+        </section>
+   
+       
+        <section id="workshops">
+            <h2>Workshops</h2>
+            {% for post in post_list %}
+                {% if post.benefits_choices == "workshops" %}
+                    <h3>Workshops Name: {{ post.title }}</h3>
+                    <p>Description {{ post.content }}</p>
+                    <a href="{% if post.slug %}{% url 'post_detail' post.slug %}{% endif %}" class="btn btn-primary">Read More</a>
+                    <br><br>
+                    {% if request.user.editor %}<!-- Checking if the User made thy post, so it can edit it -->  
+                        <a href="{% url 'request_removal' post_id=post.id %}">Request removal of the post</a><br><br>    
+                        <a href="{% url 'update_post' post.slug %}">Edit</a>
+                    {% endif %}
+                    {% if request.user.is_superuser %}
+                        <form action="{% url 'remove_post' post_id=post.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit">Remove</button>
+                        </form>
+                    {% endif %}
+                {% endif %}    
+            {%endfor%}
+
+        </section>
+        
+    
+       
+        <section id="lectures">
+                <h2>Lectures</h2>
+                {% for post in post_list %}
+                    {% if post.benefits_choices == "Lectures" %}
+                        <h3>Lectures Name: {{ post.title }}</h3>
+                        <p>Description {{ post.content }}</p>
+                        <a href="{% if post.slug %}{% url 'post_detail' post.slug %}{% endif %}" class="btn btn-primary">Read More</a>
+                        <br><br>
+                        {% if request.user.editor %}<!-- Checking if the User made thy post, so it can edit it -->  
+                            <a href="{% url 'request_removal' post_id=post.id %}">Request removal of the post</a><br><br>    
+                            <a href="{% url 'update_post' post.slug %}">Edit</a>
+                        {% endif %}
+                        {% if request.user.is_superuser %}
+                            <form action="{% url 'remove_post' post_id=post.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit">Remove</button>
+                            </form>
+                        {% endif %}
+                    {% endif %}   
+                {% endfor %}
+            </section>
+        
+    
+
+    <footer>
+        <p>&copy; 2024 הטבות לסטודנטים</p>
+        <a href="rights.html" class="back-button">back</a>
+    </footer> 
+</body>
+</html>

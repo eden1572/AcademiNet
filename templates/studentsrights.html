@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>students</title>
+    {%load static%}
+    <link rel="stylesheet" href="{% static 'studentsrights.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Rights and instructions for students</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#rights-intro">introduction</a></li>
+            <li><a href="#rights-list">Appeals</a></li>
+            <li><a href="#latest-updates">Latest updates</a></li>
+        </ul>
+    </nav>
+
+    <section id="rights-intro">
+        <!-- שלד של הכפתורים שהיו זמנים רק לעורך לשינוי זכויו והטבות
+        --> 
+        <h2>introduction</h2>
+        <p>
+            Welcome to the "Student Rights" website. Here you can find all the information
+            About your rights as students and the latest updates in the academic world.</p>
+        {% if request.user.editor %}
+            <h2>Add Appeals-Editor.</h2>
+            <form method="get" action="{% url 'Add_right' %}">
+                {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Add right</button>
+                {%endif%}
+            </form>
+    </section>
+    <form action="">
+        <div class="search-box"> <!--סינון הפוסטים לפי פילטר-->
+            <form method="GET" action="{% url 'studentrights' %}" class="mb-4">
+                <div class="search-box">
+                    <!-- Search Form -->
+                    <div class="input-group">
+                        <input type="text" name="query" class="form-control" placeholder="Search...">
+                        <select name="benefits_rights_choices" class="form-control">
+                            <option value="" disabled selected>---</option>
+                            <option value="General">General</option>
+                            <option value="Exams">Exams</option>
+                            <option value="Reserve">Reserve soldiers</option>
+                        </select>
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            
+    <section id="Appeals">
+        <h2>Appeals</h2><!--רשימה של זכויות-->
+        {% for post in post_list %} 
+            {%if post.isright %}
+                <h3>Post Name: {{ post.title }}</h3>
+                <p>Post content: {{ post.content }}</p>
+                <p>benefits_rights_choices: {{post.benefits_rights_choices}}</p>
+                <a href="{% if post.slug %}{% url 'post_detail' post.slug %}{% endif %}" class="btn btn-primary">Read More</a>
+                <br></br>
+                {% if request.user.editor %}<!--Checking if the User made thy post, so it can edit it-->  
+                    <a href="{% url 'request_removal' post_id=post.id %}">Request removal of the post</a><br><br>    
+                    <a href = "{% url 'update_post' post.slug %}">Edit</a>
+                {% endif %}
+                {% if request.user.is_superuser %}
+                    <form action="{% url 'remove_post' post_id=post.id %}" method="post">
+                         {% csrf_token %}
+                    <button type="submit">Remove</button>
+                {%endif%}
+            {%endif%}
+        {%endfor %}
+        <!-- Test appeals is a procedure where students can submit a request for a re-examination of a test score or submitted work. Students can apply an appeal when they feel their test was not check correctly, that  there was a misunderstanding or they wasn't giving enough time to complete the assignment. 
+        According to the regulations of the specific academy or institution, students can file an appeal within a fixed time after receiving the grade or feedback.
+        During the appeal process, a student can submit a request document detailing the reasons for the given grade or for a re-examination. The appeal will then go through an internal process in the institution that will decide if to approve the correction or to disapprove it. -->
+    </section>
+    <section id="latest-updates">
+        <h2>Latest updates</h2>
+        <div id="updates-container">
+            <!-- כאן יכולים להופיע עדכונים עם קישורים -->
+            One of the most important rights for students is the right to receive quality teaching and fulfillment from the study plans.
+This right includes a few sub categories such as access to information and course tools,  access to up-to-date and quality course information that include study guides, course books, online materials and more.
+        </div>
+    </section>
+
+    <footer>
+        <p>Information sources: Every right websit, The Association for Civil Rights in israel</p>
+        <p>&copy; 2024 זכויות סטודנט</p>
+        <a href="rights.html" class="back-button">back</a>
+    </footer>
+</body>
+</html>
