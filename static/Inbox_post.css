@@ -1,0 +1,83 @@
+*{
+    font-family: monospace;
+    text-align: center;
+}
+
+a{
+    text-decoration: none;
+    color: #3c67a8;
+}
+
+.main .logo{
+    text-align: left;
+    color: #e46c44;
+    font-size: xx-large;
+}
+
+.logout{
+    color: #583442;
+    font-size: medium;
+}
+
+.Inbox-title{
+    color: #583442;
+    font-size: x-large;
+    text-align: center;
+}
+
+.posts{
+    text-align: left;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 800px;
+    background-color: #ffffffd6;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px #cd722318;
+    border-left: 10px solid #eb974e;
+}
+
+footer{
+    background-color: #e48944;
+    color: #fcfeff;
+    text-align: center;
+    padding: 10px 0px;
+}
+
+.rights{
+    background-color: #e48944;
+}
+
+.Back{
+    background-color: #e48944;
+    color: #fcfeff;
+}
+
+.search-button{
+    border-style: hidden;
+    font-size: 20px;
+    background-color: #fcfeff;
+}
+
+ul{
+    float: right;
+    list-style-type: none;
+    margin-top: 5px;
+    min-height: 15px;
+    margin-right: 60px;
+    font-size: 17px;
+}
+ul li{
+    display: inline-block;
+}
+ul li a{
+    text-decoration: none;
+    color: #583442;
+    padding: 5px 20px;
+    border: 1px solid transparent;
+    transition: 0.5 ease;
+}
+ul li a:hover{
+    background-color: #b1eaeb8d;
+    color: #583442;
+    border-radius: 8px;
+}
