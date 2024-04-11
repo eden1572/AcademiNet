@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+
+        header {
+            background-color: #ffa600;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        nav {
+            background-color: #7fe2e3;
+            color: #fff;
+            padding: 10px 0;
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        li {
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+        a {
+            color: #f8f8f8;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        section {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #274060;
+        }
+
+        footer {
+            background-color: #7fe2e3;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+    </style>
+</head>
+
+<body>
+
+
+    <header>
+        <h1>Rights and instructions for students</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#rights-intro">Introduction</a></li>
+            <li><a href="#Appeals">Appeals</a></li>
+            <li><a href="#latest-updates">Latest updates</a></li>
+        </ul>
+    </nav>
+
+    <section id="rights-intro">
+        <h2>Introduction</h2>
+        <p>
+            Welcome to the "Student Rights" website. Here you can find all the information
+            about your rights as students and the latest updates in the academic world.</p>
+    </section>
+
+    <section id="Appeals">
+        <h2>Appeals</h2>
+        <p>Test appeals is a procedure where students can submit a request for a re-examination of a test score or submitted work. Students can apply an appeal when they feel their test was not checked correctly, that there was a misunderstanding or they weren't given enough time to complete the assignment.
+            According to the regulations of the specific academy or institution, students can file an appeal within a fixed time after receiving the grade or feedback.
+            During the appeal process, a student can submit a request document detailing the reasons for the given grade or for a re-examination. The appeal will then go through an internal process in the institution that will decide if to approve the correction or to disapprove it.
+        </p>
+    </section>
+
+    <section id="latest-updates">
+        <h2>Latest updates</h2>
+        <div id="updates-container">
+            One of the most important rights for students is the right to receive quality teaching and fulfillment from the study plans.
+            This right includes a few sub-categories such as access to information and course tools, access to up-to-date and quality course information that include study guides, course books, online materials, and more.
+        </div>
+    </section>
+
+    <footer>
+        <p>Information sources: Every right website, The Association for Civil Rights in Israel</p>
+        <p>&copy; 2024 זכויות סטודנט</p>
+        <a href="{% url 'rights_page' %}">Back</a>
+    </footer>
+</body>
+
+</html>
