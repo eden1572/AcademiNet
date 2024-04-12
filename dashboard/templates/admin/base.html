@@ -1,0 +1,20 @@
+<!-- שימוש בתצוגה של ממשק ADMIN DJNAGO והכנסת התוכן לתוך הממשק -->
+
+
+
+{% extends "admin/base.html" %}
+
+{% block content %}
+<h1>Welcome to Admin interface of AcademiNET</h1>
+
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'dashboard_home' %}">Dashboard</a> <!-- קישור לדף המבוקש של ה-DASHBOARD-->
+
+  </li>
+</ul>
+
+{% endblock %}
