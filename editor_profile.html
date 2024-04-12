@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor Profile</title>
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .profile-picture {
+            text-align: center;
+        }
+        .profile-picture img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .profile-info {
+            margin-top: 20px;
+        }
+        .profile-info p {
+            margin-bottom: 10px;
+        }
+        .profile-info strong {
+            font-weight: bold;
+        }
+        .change-password-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .change-password-link a {
+            margin-right: 20px;
+        }
+        /* סגנון לערכים שהוזנו */
+        .entered-value {
+            color: green; /* צבע ירוק */
+        }
+    </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <u1>
+        <li><a href="{% url 'homepage_editor' %}"><i class="fas fa-home"></i> Home</a>
+    </li>
+    </u1>
+    <div class="container">
+        <h1>Editor Profile</h1> <!-- שינוי כותרת -->
+        <div class="profile-picture">
+           <!-- בדיקה של התמונה נשארת, אבל ודאי שהמידע נכון -->
+           {% if user.profile_picture %}
+               <img src="{{ user.profile_picture.url }}" alt="{{ user.username }}'s profile picture">
+           {% else %}
+               <img src="https://turag.co.il/wp-content/uploads/2018/06/man.jpg" alt="Default profile picture">
+           {% endif %}
+        </div>
+        <div class="profile-info">
+            <p><strong>Full Name:</strong> {% if editor.full_name %}<span class="entered-value">{{ editor.full_name }}</span>{% else %}Not Entered{% endif %}</p>
+            <p><strong>Email:</strong> {% if user.email %}<span class="entered-value">{{ user.email }}</span>{% else %}Not Entered{% endif %}</p>
+            <p><strong>Phone:</strong> {% if editor.phone %}<span class="entered-value">{{ editor.phone }}</span>{% else %}Not Entered{% endif %}</p>
+            <p><strong>Organization Name:</strong> {% if editor.organization_name %}<span class="entered-value">{{ editor.organization_name }}</span>{% else %}Not Entered{% endif %}</p>
+            <p><strong>Role in Organization:</strong> {% if editor.role_in_organization %}<span class="entered-value">{{ editor.role_in_organization }}</span>{% else %}Not Entered{% endif %}</p>
+        </div>
+       <!-- הצגת רשימת הפוסטים -->
+       <div class="user-posts">
+        <h2>User Posts:</h2>
+               <div>
+               <ul>
+                   {% for post in post_list %}
+                       
+                           {% if post.author == user %}
+                               <h3>Post Name: {{ post.title }}</h3>
+                               <p>Post content: {{ post.content }}</p>
+                               <h4><a href="{% url 'post_detail' slug=post.slug %}">Link to the Post</a><!--Going to the post.-->
+                               <!-- Add more fields as needed -->
+                           {%endif%}
+                       
+                   {% empty %}
+                       <li>No posts available.</li>
+                   {% endfor %}
+               </ul>
+           </div>
+           <div class="notifications">
+               <h2>Notifications</h2>
+               <form action="{% url 'mark_notifications_as_read' %}" method="post">
+                   {% csrf_token %}
+                   <ul>
+                       {% if user_notifications %}
+                           {% for notification in user_notifications %}
+                               <li>
+                                   <input type="checkbox" name="notifications" value="{{ notification.id }}">
+                                   {{ notification.message }} - {{ notification.timestamp }}
+                               </li>
+                               <br>
+                           {% endfor %}
+                           <button type="submit">Mark Selected as Read</button>
+                       {% else %}
+                           <li>No notifications</li>
+                       {% endif %}
+                       <a class="navbar-brand" href="{% url 'notifations_list' %}" > All Notifications</a>
+                   </ul>
+               </form>
+           <div class = "messages">
+               <a class="navbar-brand" href="{% url 'inbox' %}" >Inbox</a>
+           </div>
+       <div class="change-password-link">
+           <a href="{% url 'change-password-editor' %}">Change Password</a>
+           <a href="{% url 'change-email-editor' %}">Change Email</a>
+           <a href="{% url 'change-phone' %}">Change Phone</a>
+
+           <a class="navbar-brand" href="{% url 'create_message' %}"> submit a complaint or a bug</a>
+       </div>
+   </div>
+</body>
+</html>
