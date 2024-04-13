@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<h1>{{ message.subject }}</h1>
+{% if message.sender.is_superuser %}
+    <p>From: Admin</p>
+{%else%}
+    <p>From: {{ message.sender }}</p>
+{%endif%}
+<p>Subject : {{message.subject}} </p>
+
+<p>Text: {{ message.body }}</p>
+
+<p>{{message.created_at}}</p>
+{%if message.file_sumbit_upload%}
+    <a href="{{ message.file_sumbit_upload.url }}" download>Download File</a>
+{%endif%}
+
+{%if user.is_superuser%}
+<a href="{% url 'solve_problem' message.id %}">Mark as Solved</a>
+{%endif%}
+
+{% endblock content %}

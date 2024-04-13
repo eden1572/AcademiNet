@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+
+<h1>Messages</h1>
+
+{% for message in messages %}
+    <div class="message">
+        {% if message.receiver == user %}
+        <a href="{% url 'message_detail' message.pk %}">
+            {{ message.subject }}</a> 
+            
+            {% if message.sender.is_superuser %}
+                <p>From: Admin</p>
+                    {%else%}
+                    <p>From: {{ message.sender }}</p>
+           {%endif%}
+          
+        {%endif%}      
+        
+    </div>
+{% endfor %}
+
+{% endblock content %}

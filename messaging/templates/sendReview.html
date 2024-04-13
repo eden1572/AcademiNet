@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="ContactUs.css">
+    <title>AcadmiNet</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="main">
+        <h3 class="logo">AcadmiNet</h3>
+        <div class="navbar"> <!--בר משימות ראשי-->
+            {% if  request.user.editor %}
+            <ul>
+                <li><a href="{% url 'about_us_editor' %}" class="link">About Us</a></li>
+                <li><a href="{% url 'rights_page_editor' %}" class="link">Benefit Rights</a></li>
+                <li><a href="{% url 'blog_page_editor' %}" class="link">Blog</a></li>
+                <li><a href="{% url 'contact_us_editor' %}" class="link">Contact Us</a></li>
+                <li><a href="{% url 'homepage_editor' %}" class="link">Home</a></li>
+            </ul>
+        {% else %}
+            {% if user.is_superuser %}
+                <ul>
+                    <li><a href="/admin/" class="link">Admin Panel</a></li>
+                    <li><a href="{% url 'about_us_admin' %}" class="link">About Us</a></li>
+                    <li><a href="{% url 'rights_page_admin' %}" class="link">Benefit Rights</li>
+                    <li><a href="{% url 'blog_page_admin' %}" class="link">Blog</a></li>
+                    <li><a href="{% url 'contact_us_admin' %}" class="link">Contact Us</a></li>
+                    <li><a href="{% url 'homepage_admin' %}" class="link">Home</a></li>
+                </ul>
+            {% else %}
+                <ul>
+                    <li><a href="{% url 'about_us' %}" class="link">About Us</a></li>
+                    <li><a href="{% url 'rights_page' %}" class="link">Benefit Rights</a></li>
+                    <li><a href="{% url 'blog_page' %}" class="link">Blog</a></li>
+                    <li><a href="{% url 'study_groups' %}" class="study-group">Study Groups</a></li><!--יופיע רק בדף זה-->
+                    <li><a href="{% url 'contact_us' %}" class="link">Contact Us</a></li>
+                    <li><a href="{% url 'homepage' %}" class="link">Home</a></li>
+                </ul>
+            {% endif %}
+        {% endif %}
+         
+        </div>
+    </div> <br> <br>
+<div class="SendReview">
+    <h3>Send a Review:</h3>
+    <form action="" target="_self"> <!--קישור לבסיס נתונים-->
+        <label for="ReviewStar">Choose Rating:</label> <!--דירוג האתר-->
+        <select name="Rate" id="Rate">
+            <option value="" disabled selected>---</option>
+            <option value="one">1</option>
+            <option value="two">2</option>
+            <option value="three">3</option>
+            <option value="four">4</option>
+            <option value="five">5</option>
+        </select>
+        <br><br>
+        <label for="Description" class="Description">Description:</label><br>
+        <textarea name="Description" id="Description" cols="50" rows="10" placeholder="Start typing..."></textarea>
+        <br><br>
+        <label for="file"><i class='bx bx-upload'></i></label> <!--העלאת קובץ-->
+        <input type="file" name="file" id="file" accept=".pdf, .doc, .docx, .txt"> <!--לנסות לאפשר העלאת תמונה-->
+        <br><br>
+        <input type="submit" value="Create">
+    </form>
+</div>
+</div> <br>
+<footer>
+    <p class="rights">all rights goes to AcadmiNet&copy;</p>
+    <a href="" class="Back">Back</a><!--קישור לדף ראשי-->
+</footer>
+</body>
+</html>
