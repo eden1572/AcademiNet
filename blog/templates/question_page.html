@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%load static%}
+    <link rel="stylesheet" href="{% static 'question_page.css' %}">
+    <title>AcadmiNet</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<style>
+    .profile {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    overflow: visible; /* כדי להרשות לרשימה להיפתח מתוך העיגול */
+}
+
+.profile ul {
+    position: absolute;
+    top: 15px; /* הרחבת המרווח בין העיגול לרשימה */
+    left: -10px; /* מיקום הרשימה לצד שמאל של העיגול */
+    background-color: #333;
+    border-radius: 5px;
+    display: none;
+    padding: 0;
+    width: 140px; /* רוחב הרשימה */
+}
+
+.profile:hover ul {
+    display: block;
+}
+
+.profile ul li {
+    list-style: none;
+    display: block;
+    padding: 10px;
+}
+
+.profile ul li a {
+    color: white;
+    text-decoration: none; /* מוסיף קו תחתון לקישור */
+    font-size: 14px;
+    outline: none; /* מוסיף את הקו המופיע סביב הכיתוב כשהעכבר עליו */
+    cursor: pointer; /* משנה את הסמל של העכבר למצב לחיצה */
+}
+
+.profile img {
+    width: 100%; /* גודל התמונה תתאים לגודל העיגול */
+    height: 100%; /* גודל התמונה תתאים לגודל העיגול */
+    border-radius: 50%; /* יעגל את הפינות של התמונה */
+}
+</style>
+<body>
+    <div class="main">
+        <h3 class="logo">AcadmiNet</h3>
+        <div class="navbar"> <!--בר משימות ראשי-->
+            
+            <ul>
+                <li><a href="{% url 'homepage' %}">Home</a></li>
+                <li><a href="{% url 'rights_page' %}">Rights and Benefits</a></li>
+                <li><a href="{% url 'blog_page' %}" class="back-to-forum">Forum</a></li>
+                <li><a href="{% url 'about_us' %}">About us</a></li>
+                <li><a href="{% url 'contact_us' %}">Contact us</a></li>
+            </ul>
+        </div>
+    </div> <br> <br>
+    <div class="question">
+        <h1>Upload Question</h1>
+        <form method="post" action="{% url 'add_post' %}" enctype="multipart/form-data"> <!--קישור לבסיס נתונים-->
+           {% csrf_token %}
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" placeholder="...."> <!--כותרת השאלה-->
+            <br><br>
+            <label for="divison">Choose divison:</label> <!--בחירת מחלקה-->
+            <select name="divison" id="divison">
+                <option value="" disabled selected>---</option>
+                <option value="Software Engineering">Software Engineering</option> 
+                <option value="Mechanical Engineering">Mechanical Engineering</option>
+                <option value="Electrical Engineering">Electrical Engineering</option>
+                <option value="Architecture">Architecture</option>
+                <option value="Structural Engineering">Structural Engineering</option>
+                <option value="Industrial Engineering">Industrial Engineering</option>
+                <option value="Computer science">Computer science</option>
+                <option value="Chemical Engineering">Chemical Engineering</option>
+            </select>
+            <br><br>
+            <label for="topic">Choose Topic:</label> <!--בחירת נושא-->
+            <select name="topic" id="topic"> <!--נושא הפוסט-->
+                <option value="" disabled selected>---</option>
+                <option value="Summaries">Summaries</option>
+                <option value="help">Help in courses</option>
+            </select>
+            <br> <br>
+            <input type="checkbox" name="anonymous"> <!--העלאת שאלה אנונימית-->
+            <label for="anonymous">Anonymous question</label>
+            <br><br>
+            <textarea name="content" id="question" cols="45" rows="15" placeholder="Start typing..."></textarea>
+            <br><br>
+            <label for="file"><i class='bx bx-upload'></i></label> <!--העלאת קובץ-->
+            <input type="file" name="file" id="file" accept=".pdf, .doc, .docx, .txt">
+            <br><br>
+            <input type="submit" value="Send">
+        </form>
+    </div> <br>
+    <footer>
+        <p class="rights">all rights goes to AcadmiNet&copy;</p>
+        <a href="{% url 'blog_page' %}" class="Back">Back</a> <!--חזרה לדף פורום-->
+    </footer>
+    <script>
+        function confirmLogout() {
+            var result = confirm("Are you sure you want to log out?");
+            if (result) {
+                logout();
+            }
+        }
+
+        function logout() {
+            // Perform logout operation here
+            fetch("{% url 'signout' %}", {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken')
+                }
+            })
+            .then(response => {
+                    if (response.ok) {
+                        // Show success message
+                        alert("You have successfully logged out, see you next time :)");
+                        // Redirect to homepage after successful logout
+                        window.location.href = "{% url 'project' %}";
+                    } else {
+                        // Handle error if logout fails
+                        alert("An error occurred during logout. Please try again later.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Handle error if fetch fails
+                    alert("An error occurred during logout. Please try again later.");
+                });
+        }
+
+        // Function to get CSRF token from cookie
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+</body>
+</html>

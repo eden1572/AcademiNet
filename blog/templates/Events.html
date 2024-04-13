@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AcadmiNet</title>
+    {%load static%}
+    <link rel="stylesheet" href="{% static 'Events.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Student benefits</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="{% url 'Events' %}">Events</a></li>
+            <li><a href="{% url 'Workshops' %}">Workshops</a></li>
+            <li><a href="{% url 'Scholarships' %}">Scholarships</a></li>
+        </ul>
+    </nav>
+
+    <section id="info">
+        <h2>Events</h2>
+        <p>A variety of social, cultural and sports events and lectures for students.</p> <!--מידע על אתר הטבות-->
+    </section>
+
+    {% for post in post_list %}
+                {% if post.benefits_choices.strip == "Events" %}
+                  <section id="Event">
+                        <h3>Event Name: {{ post.title }}</h3>
+                        <p>Description {{ post.content }}</p>
+                        <a href="{% if post.slug %}{% url 'post_detail' post.slug %}{% endif %}" class="button-registration">Read More</a>
+                        <br><br>
+                        {% if request.user.editor %}<!-- Checking if the User made thy post, so it can edit it -->  
+                            <a href="{% url 'request_removal_benefits' post_id=post.id %}" class="button-registration">Request removal of the post</a><br><br>    
+                            <a href="{% url 'update_post' post.slug %}" class="button-registration">Edit</a>
+                        {% endif %}
+                        {% if request.user.is_superuser %}
+                            <form action="{% url 'remove_post' post_id=post.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="button-registration" >Remove</button>
+                            </form>
+                        {% endif %}
+                      {% endif %}  
+                 </section>        
+        {%endfor%}
+   
+    <footer>
+        <p>&copy; 2024 הטבות לסטודנטים</p>
+        <a href="{% url 'studentbenefits' %}" class="back-button">back to benefits</a> <!--חזרה לדף זכויות והטבות-->
+        <br>
+        {% if request.user.editor %} 
+            <li><a href="{% url 'homepage_editor' %}" class="link">Home</a></li>
+    {% else %}
+        {% if user.is_superuser %}
+          <li><a href="{% url 'homepage_admin' %}" class="link">Home</a></li>
+        {% else %}
+            <a href="{% url 'homepage' %}" class="back-button">back</a>
+        {% endif %}
+    {% endif %}
+    </footer> 
+</body>
+</html>

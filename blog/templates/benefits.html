@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {%load static%}
+    <link rel="stylesheet" href= "{% static 'benefitsrights.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Student benefits</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="{% url 'Events' %}">Events</a></li>
+            <li><a href="{% url 'Workshops' %}">Workshops</a></li>
+            <li><a href="{% url 'Scholarships' %}">Scholarships</a></li>
+        </ul>
+    </nav>
+    <section id = "add_benefit">
+    {% if request.user.editor %}
+            <h2>Add Appeals-Editor.</h2>
+            <form method="get" action="{% url 'Add_benefits' %}">
+                {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Add right</button>
+                {%endif%}
+            </form>
+    </section>
+   
+   
+    
+        <section id="events">
+            <h2>Events</h2>
+            <section id="events">
+                <p>A variety of social, cultural and sports events for students.</p>
+                  <p> click here to view them <a href="{% url 'Events' %}" class="button-registration">click here</a>
+                </p>
+           </section>
+           
+        </section>
+   
+       
+        <section id="workshops">
+            <h2>Workshops</h2>
+            <section id="workshops">
+                <p>Practical workshops on various topics are given by experts in the field.</p>
+                <p>"Development of mobile applications for Android systems"</p>
+                <p> click here to view them <a href="{% url 'Workshops' %}" class="button-registration">click here</a>
+            </section>
+
+        </section>
+
+        <section id="Scholarships">
+            <section id="Scholarships">
+                <h2>Scholarships</h2>
+                <p>Scholarships are great way to save and help others!</p>
+                <p> click here to check on them <a href="{% url 'Scholarships' %}" class="button-registration">click here</a>
+            </section>
+                
+        </section>
+        
+    
+
+    <footer>
+        <p>&copy; 2024 הטבות לסטודנטים</p>
+        {% if request.user.editor %} 
+        <li><a href="{% url 'homepage_editor' %}" class="link">Home</a></li>
+    {% else %}
+        {% if user.is_superuser %}
+          <li><a href="{% url 'homepage_admin' %}" class="link">Home</a></li>
+        {% else %}
+            <a href="{% url 'homepage' %}" class="back-button">back</a>
+        {% endif %}
+    {% endif %}
+        
+    </footer> 
+</body>
+</html>
